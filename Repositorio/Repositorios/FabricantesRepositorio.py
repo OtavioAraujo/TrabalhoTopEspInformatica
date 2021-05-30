@@ -1,4 +1,5 @@
 from Repositorio.Conexao.conexao import ConexaoPostgre
+from Repositorio.Entidades.Fabricante import Fabricante
 
 class FabricantesRepositorio:
     def __init__(self):
@@ -27,10 +28,10 @@ class FabricantesRepositorio:
 	              FROM tb_fabricante;"""
 
         cur.execute(sql)  
-        listaFabricantes = cur.fetchall()
-
+        listaFabricanteBanco = cur.fetchall()
+        listaFabricanteEntidade = self.converterListaBancoParaListaEntidade(listaFabricanteBanco)
         con.close()
-        return listaFabricantes
+        return listaFabricanteEntidade
         
     def readFabricante(self, id_fabricante):
         con = self.conexao.conectar()
@@ -42,14 +43,16 @@ class FabricantesRepositorio:
                   WHERE tb_fabricante.id_fabricante = {id_fabricante};"""
 
         cur.execute(sql)  
-        fabricante = cur.fetchall()      
-
+        fabricanteBanco = cur.fetchall()   
         con.close()
-        if len(fabricante) > 0:
-            return fabricante[0]
-        else:
-            return None
 
+        if len(fabricanteBanco) > 0:
+            fabricanteEntidade = self.converterBancoParaEntidade(fabricanteBanco[0])
+            return fabricanteEntidade
+        else:
+            return None   
+
+        
     def updateFabricante(self, fabricante):
         con = self.conexao.conectar()
         cur = con.cursor()
@@ -78,3 +81,14 @@ class FabricantesRepositorio:
 
         con.close()
         
+    def converterBancoParaEntidade(self, fabricanteBanco):
+        fabricanteEntidade = Fabricante()
+        fabricanteEntidade.setIdFabricante(fabricanteBanco[0])
+        fabricanteEntidade.setNome(fabricanteBanco[1])
+        return fabricanteEntidade
+
+    def converterListaBancoParaListaEntidade(self, listaFabricanteBanco):
+        listaFabricanteEntidade = []
+        for fabricanteBanco in listaFabricanteBanco:
+            listaFabricanteEntidade.append(self.converterBancoParaEntidade(fabricanteBanco))
+        return listaFabricanteEntidade
