@@ -90,11 +90,11 @@ class UsuariosRepositorio:
         con.close()
     
     def converterBancoParaEntidade(self, usuarioBanco):
-        naveEntidade = Usuario()
-        naveEntidade.setIdUsuario(usuarioBanco[0])
-        naveEntidade.setEMail(usuarioBanco[1])
-        naveEntidade.setNome(usuarioBanco[2])
-        return naveEntidade
+        usuarioEntidade = Usuario()
+        usuarioEntidade.setIdUsuario(usuarioBanco[0])
+        usuarioEntidade.setEMail(usuarioBanco[1])
+        usuarioEntidade.setNome(usuarioBanco[2])
+        return usuarioEntidade
 
     def converterListaBancoParaListaEntidade(self, listaUsuarioBanco):
         listaUsuarioEntidade = []
