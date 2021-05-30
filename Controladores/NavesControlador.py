@@ -8,15 +8,7 @@ class NaveControlador:
         self.navesServico = NavesServico()
 
     def createNave(self, nave):
-
-        vlrsObrgNaoPreech = self.navesServico.valoresObrigatoriosNaoPreenchidos(nave)
-        if (len(vlrsObrgNaoPreech) > 0):
-            raise ValoresInvalidosException(menssagem=f"Os valores a seguir são obrigatórios: {utilitarios.listarPorExtenso(vlrsObrgNaoPreech)}. Por favor, preencha-os.")
-
-        nomeJaExiste = self.navesServico.nomeJaExiste(nave)
-        if (nomeJaExiste):
-            raise ValoresInvalidosException(menssagem=f"O nome informado já existe!")
-
+        self.validarConsistensiaDeNave(nave)
         self.navesServico.createNave(nave)
 
     def readNaves(self):
@@ -30,8 +22,30 @@ class NaveControlador:
 
         return self.navesServico.readNave(id_nave)
 
-    # def updateNave(self, nave):
-    #     self.navesServico.updateNave(nave)
+    def updateNave(self, nave):
 
-    # def deleteNave(self, id_nave):
-    #     self.navesServico.deleteNave(id_nave)
+        self.possuiId(nave.getIdNave())
+
+        self.validarConsistensiaDeNave(nave)
+
+        self.navesServico.updateNave(nave)
+
+    def deleteNave(self, id_nave):
+        self.possuiId(id_nave)
+        self.navesServico.deleteNave(id_nave)
+
+    def validarConsistensiaDeNave(self, nave):
+        vlrsObrgNaoPreech = self.navesServico.valoresObrigatoriosNaoPreenchidos(nave)
+        if (len(vlrsObrgNaoPreech) > 0):
+            raise ValoresInvalidosException(menssagem=f"Os valores a seguir são obrigatórios: {utilitarios.listarPorExtenso(vlrsObrgNaoPreech)}. Por favor, preencha-os.")
+
+        nomeJaExiste = self.navesServico.nomeJaExiste(nave)
+        if (nomeJaExiste):
+            raise ValoresInvalidosException(menssagem=f"O nome informado já existe!")
+
+        # verificar se fabricante existe
+    
+    def possuiId(self, id_nave):
+        possuiId = self.navesServico.possuiId(id_nave)
+        if (not possuiId):
+            raise ValoresInvalidosException(menssagem=f"O id da nave informado não é válido!")

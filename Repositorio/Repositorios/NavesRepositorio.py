@@ -87,7 +87,7 @@ class NavesRepositorio:
                       tripulacao={nave.getTripulacao()}, 
                       passageiros={nave.getPassageiros()}, 
                       capacidade_carga={nave.getCapacidadeCarga()}, 
-                      preco={nave.getIdNave()}
+                      preco={nave.getPreco()}
 	              WHERE tb_nave.id_nave = {nave.getIdNave()};"""
 
         cur = con.cursor()
@@ -128,13 +128,16 @@ class NavesRepositorio:
             listaNaveEntidade.append(self.converterBancoParaEntidade(naveBanco))
         return listaNaveEntidade
     
-    def nomeJaExiste(self, nome):
+    def nomeJaExiste(self, nave):
         con = self.conexao.conectar()
         cur = con.cursor()
 
         sql = f"""SELECT count(1)
 	              FROM tb_nave
-                  WHERE tb_nave.nome = '{nome}';"""
+                  WHERE tb_nave.nome = '{nave.getNome()}' """
+
+        if nave.getIdNave() != None:
+            sql += f"AND tb_nave.id_nave != {nave.getIdNave()}"
 
         cur.execute(sql)  
         qtdNaves = cur.fetchall()      

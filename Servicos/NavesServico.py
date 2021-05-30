@@ -15,6 +15,12 @@ class NavesServico:
     def readNave(self, id_nave):
         return self.navesRepositorio.readNave(id_nave)
 
+    def updateNave(self, nave):
+        self.navesRepositorio.updateNave(nave)
+
+    def deleteNave(self, id_nave):
+        self.navesRepositorio.deleteNave(id_nave)
+
     def valoresObrigatoriosNaoPreenchidos(self, nave):
         vlrsObrgNaoPreech = []
 
@@ -27,7 +33,7 @@ class NavesServico:
         return vlrsObrgNaoPreech    
     
     def nomeJaExiste(self, nave):
-        return self.navesRepositorio.nomeJaExiste(nave.getNome())
+        return self.navesRepositorio.nomeJaExiste(nave)
 
     def idValido(self, idNave):
         try:
@@ -37,3 +43,6 @@ class NavesServico:
                 return False    
         except:
             return False
+    
+    def possuiId(self, id_nave):
+        return id_nave != None
