@@ -20,13 +20,18 @@ class NaveControlador:
         self.navesServico.createNave(nave)
 
     def readNaves(self):
-        self.navesServico.readNaves()
+        return self.navesServico.readNaves()
         
     def readNave(self, id_nave):
-        self.navesServico.readNave(id_nave)
 
-    def updateNave(self, nave):
-        self.navesServico.updateNave(nave)
+        idValido = self.navesServico.idValido(id_nave)
+        if (not idValido):
+            raise ValoresInvalidosException(menssagem=f"O id da nave informado não é válido!")
 
-    def deleteNave(self, id_nave):
-        self.navesServico.deleteNave(id_nave)
+        return self.navesServico.readNave(id_nave)
+
+    # def updateNave(self, nave):
+    #     self.navesServico.updateNave(nave)
+
+    # def deleteNave(self, id_nave):
+    #     self.navesServico.deleteNave(id_nave)
