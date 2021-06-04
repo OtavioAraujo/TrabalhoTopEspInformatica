@@ -1,5 +1,5 @@
 CREATE TABLE tb_usuario (
-    id_usuario            SERIAL,
+    id_usuario          SERIAL,
     email               VARCHAR(50) UNIQUE NOT NULL,
     nome                VARCHAR(50) NOT NULL,
     senha               VARCHAR(50) NOT NULL,
