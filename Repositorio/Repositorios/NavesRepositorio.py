@@ -18,18 +18,23 @@ class NavesRepositorio:
                       capacidade_carga, 
                       preco
                   ) VALUES (
-                      {nave.getIdFabricante()}, 
-                      '{nave.getNome()}', 
-                      '{nave.getModelo()}', 
-                      {nave.getTripulacao()}, 
-                      {nave.getPassageiros()}, 
-                      {nave.getCapacidadeCarga()}, 
-                      {nave.getPreco()}
-                  );"""
+                      {nave.getIdFabricante() if nave.getIdFabricante() != None else 'NULL'}, 
+                      '{nave.getNome() if nave.getNome() != None else 'NULL'}', 
+                      '{nave.getModelo() if nave.getModelo() != None else 'NULL'}', 
+                      {nave.getTripulacao() if nave.getTripulacao() != None else 'NULL'}, 
+                      {nave.getPassageiros() if nave.getPassageiros() != None else 'NULL'}, 
+                      {nave.getCapacidadeCarga() if nave.getCapacidadeCarga() != None else 'NULL'}, 
+                      {nave.getPreco() if nave.getPreco() != None else 'NULL'}
+                  ) RETURNING id_nave;"""
 
-        cur.execute(sql)        
+        cur.execute(sql)           
+        id_nave = cur.fetchone()[0]  
+        nave.setIdNave(id_nave)  
+
         con.commit()
-        con.close()
+        con.close()       
+
+        return nave
 
     def readNaves(self):
         con = self.conexao.conectar()
@@ -81,14 +86,14 @@ class NavesRepositorio:
         cur = con.cursor()
 
         sql = f"""UPDATE tb_nave
-	              SET id_fabricante={nave.getIdFabricante()},
-                      nome='{nave.getNome()}', 
-                      modelo='{nave.getModelo()}', 
-                      tripulacao={nave.getTripulacao()}, 
-                      passageiros={nave.getPassageiros()}, 
-                      capacidade_carga={nave.getCapacidadeCarga()}, 
-                      preco={nave.getPreco()}
-	              WHERE tb_nave.id_nave = {nave.getIdNave()};"""
+	              SET id_fabricante={nave.getIdFabricante() if nave.getIdFabricante() != None else 'NULL'},
+                      nome='{nave.getNome() if nave.getNome() != None else 'NULL'}', 
+                      modelo='{nave.getModelo() if nave.getModelo() != None else 'NULL'}', 
+                      tripulacao={nave.getTripulacao() if nave.getTripulacao() != None else 'NULL'}, 
+                      passageiros={nave.getPassageiros() if nave.getPassageiros() != None else 'NULL'}, 
+                      capacidade_carga={nave.getCapacidadeCarga() if nave.getCapacidadeCarga() != None else 'NULL'}, 
+                      preco={nave.getPreco() if nave.getPreco() != None else 'NULL'}
+	              WHERE tb_nave.id_nave = {nave.getIdNave() if nave.getIdNave() != None else 'NULL'};"""
 
         cur = con.cursor()
         cur.execute(sql)
