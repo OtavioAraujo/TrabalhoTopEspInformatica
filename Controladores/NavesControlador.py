@@ -9,7 +9,7 @@ class NaveControlador:
 
     def createNave(self, nave):
         self.validarConsistensiaDeNave(nave)
-        self.navesServico.createNave(nave)
+        return self.navesServico.createNave(nave)
 
     def readNaves(self):
         return self.navesServico.readNaves()
