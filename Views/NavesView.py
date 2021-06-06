@@ -14,17 +14,22 @@ class NavesView:
         self.fabricantesControlador = FabricantesControlador()
 
     def createNave(self):
+        u = self.utilView
         os.system('cls')
         nave = self.receberValores()
+        
         try:
             naveCriada = self.navesControlador.createNave(nave)
             os.system('cls')
-            print('Nave criada com sucesso!')
+            u.printSeparador(f'{"="*70}')
+            u.printSucesso('Nave criada com sucesso!')
             self.imprimir([naveCriada])
         except Exception as ex:
             os.system('cls')
-            print('Erro ao criar a nave! Tente novamente.')
-            print(F'ERRO: {ex}')
+            u.printSeparador(f'{"="*70}')
+            u.printErro('Erro ao criar a nave! Tente novamente.')
+            u.printErro(F'ERRO: {ex}')
+            u.printSeparador(f'{"="*70}') 
         os.system('pause')
 
     def readNave(self):
@@ -34,6 +39,7 @@ class NavesView:
         os.system('pause')
 
     def imprimirNaves(self, id_nave=None, resumido=True):
+        u = self.utilView
         os.system('cls')
         naves = []
         try:
@@ -49,104 +55,121 @@ class NavesView:
                     self.imprimirResumido(naves)    
                 else:
                     self.imprimir(naves)
-            else: 
-                print('Nenhuma nave encontrada!')
+            else:
+                u.printSeparador(f'{"="*70}') 
+                u.printErro('Nenhuma nave encontrada!')
+                u.printSeparador(f'{"="*70}')
         except Exception as ex:
-            print('Erro ao buscar a(s) nave(s)! Tente novamente.')
-            print(F'ERRO: {ex}')
+            u.printSeparador(f'{"="*70}')
+            u.printErro('Erro ao buscar a(s) nave(s)! Tente novamente.')
+            u.printErro(F'ERRO: {ex}')
+            u.printSeparador(f'{"="*70}')
 
     def updateNave(self):
+        u = self.utilView
         os.system('cls')
         self.imprimirNaves()        
-        idNave = self.utilView.receberValor(chave="informe o id da nave que será alterada", tipo=int, obrigatorio=True, validos=lambda x: self.navesControlador.readNave(x) != None)
-        nave = self.navesControlador.readNave(idNave)
-        
-        while True:
+        idNave = self.utilView.receberValor(chave="informe o id da nave que será alterada (Digite 0 para cancelar)", tipo=int, obrigatorio=True, validos=lambda x: x == 0 or self.navesControlador.readNave(x) != None )        
+        if idNave != 0:
+            nave = self.navesControlador.readNave(idNave)
+            
+            while True:
+                os.system('cls')
+                self.imprimir([nave])
+                u.printInstrucao('informe qual valor você quer alterar: ')
+                u.printOpcao('1', 'Nome')
+                u.printOpcao('2', 'Fabricante')
+                u.printOpcao('3', 'Modelo')
+                u.printOpcao('4', 'Tripulacao')
+                u.printOpcao('5', 'Passageiros')
+                u.printOpcao('6', 'Capacidade de Carga')
+                u.printOpcao('7', 'Preço')
+                print('')
+                u.printOpcao('0', 'Finalizar alteração')
+                op = self.utilView.receberValor(chave="valor", tipo=int, obrigatorio=True, validos=lambda x: x in range(8))
+                if op == 0:     
+                    break                
+                else:
+                    if op == 1: 
+                        valor = self.utilView.receberValor(chave="informe o novo valor de nome", tipo=str, obrigatorio=True)
+                        nave.setNome(valor)
+                    elif op == 2: 
+                        # Imprimir resumido fornecedores
+                        print('Imprimir resumido fornecedores')
+                        valor = self.utilView.receberValor(chave="informe o novo valor de fabricante", tipo=int,)
+                        nave.setIdFabricante(valor)
+                    elif op == 3: 
+                        valor = self.utilView.receberValor(chave="informe o novo modelo", tipo=str,)
+                        nave.setModelo(valor)
+                    elif op == 4: 
+                        valor = self.utilView.receberValor(chave="informe o novo valor de tripulacao", tipo=int,)
+                        nave.setTripulacao(valor)
+                    elif op == 5: 
+                        valor = self.utilView.receberValor(chave="informe o novo valor de passageiros", tipo=int,)
+                        nave.setPassageiros(valor)
+                    elif op == 6: 
+                        valor = self.utilView.receberValor(chave="informe o novo valor de capacidade de carga", tipo=float,)
+                        nave.setCapacidadeCarga(valor)
+                    elif op == 7: 
+                        valor = self.utilView.receberValor(chave="informe o novo preço", tipo=float,)
+                        nave.setPreco(valor)
+
+
             os.system('cls')
             self.imprimir([nave])
-            print('informe qual valor você quer alterar: ')
-            print('1 - Nome')
-            print('2 - Fabricante')
-            print('3 - Modelo')
-            print('4 - Tripulacao')
-            print('5 - Passageiros')
-            print('6 - Capacidade de Carga')
-            print('7 - Preço')
-            print('0 - Finalizar alteração')
-            op = self.utilView.receberValor(chave="valor", tipo=int, obrigatorio=True, validos=lambda x: x in range(8))
-            if op == 0:     
-                break                
-            else:
-                if op == 1: 
-                    valor = self.utilView.receberValor(chave="informe o novo nome", tipo=str, obrigatorio=True)
-                    nave.setNome(valor)
-                elif op == 2: 
-                    # Imprimir resumido fornecedores
-                    print('Imprimir resumido fornecedores')
-                    valor = self.utilView.receberValor(chave="informe o novo fabricante", tipo=int,)
-                    nave.setIdFabricante(valor)
-                elif op == 3: 
-                    valor = self.utilView.receberValor(chave="informe o novo modelo", tipo=str,)
-                    nave.setModelo(valor)
-                elif op == 4: 
-                    valor = self.utilView.receberValor(chave="informe o novo tripulacao", tipo=int,)
-                    nave.setTripulacao(valor)
-                elif op == 5: 
-                    valor = self.utilView.receberValor(chave="informe o novo passageiros", tipo=int,)
-                    nave.setPassageiros(valor)
-                elif op == 6: 
-                    valor = self.utilView.receberValor(chave="informe o novo capacidade de carga", tipo=float,)
-                    nave.setCapacidadeCarga(valor)
-                elif op == 7: 
-                    valor = self.utilView.receberValor(chave="informe o novo preço", tipo=float,)
-                    nave.setPreco(valor)
-
-
-        os.system('cls')
-        self.imprimir([nave])
-        print('Deseja salvar as alterações?')
-        print('1 - Sim')
-        print('2 - Não')
-        op = self.utilView.receberValor(chave="resposta", tipo=int, obrigatorio=True, validos=lambda x: x in range(1, 3))
-        if op == 1: 
-            try:
-                self.navesControlador.updateNave(nave)
-                print('A nave foi atualizada com sucesso!')  
-            except Exception as ex:
-                print('Erro ao atualizar a nave! Tente novamente.')  
-                print(F'ERRO: {ex}')
-            os.system('pause')
+            u.printInstrucao('Deseja salvar as alterações?')
+            u.printOpcao('1', 'Sim')
+            u.printOpcao('2', 'Não')
+            op = self.utilView.receberValor(chave="resposta", tipo=int, obrigatorio=True, validos=lambda x: x in range(1, 3))
+            if op == 1:
+                os.system('cls')
+                u.printSeparador(f'{"="*70}') 
+                try:
+                    self.navesControlador.updateNave(nave)
+                    u.printSucesso('A nave foi atualizada com sucesso!')  
+                except Exception as ex:
+                    u.printErro('Erro ao atualizar a nave! Tente novamente.')  
+                    u.printErro(F'ERRO: {ex}')
+                u.printSeparador(f'{"="*70}') 
+                os.system('pause')
 
     def deleteNave(self):
+        u = self.utilView
         os.system('cls')
         self.imprimirNaves()
         idNave = self.utilView.receberValor(chave="informe o id da nave que será removida (Digite 0 para cancelar)", tipo=int, obrigatorio=True, validos=lambda x: x == 0 or self.navesControlador.readNave(x) != None )
         if idNave != 0:
             self.imprimirNaves(idNave, False)
-            print(f'Tem cereza que quer excluir essa nave?')
-            print('1 - Sim')
-            print('2 - Não')
+            u.printInstrucao(f'Tem cereza que quer excluir essa nave?')
+            u.printOpcao('1', 'Sim')
+            u.printOpcao('2', 'Não')
             op = self.utilView.receberValor(chave="resposta", tipo=int, obrigatorio=True, validos=lambda x: x in range(1, 3))
             if op == 1:
                 os.system('cls')
+                u.printSeparador(f'{"="*70}')
                 try:
                     self.navesControlador.deleteNave(idNave)
-                    print('A nave foi removida com sucesso!')  
+                    u.printSucesso('A nave foi removida com sucesso!')  
                 except Exception as ex:
-                    print('Erro ao remover a nave! Tente novamente.')  
-                    print(F'ERRO: {ex}')
+                    u.printErro('Erro ao remover a nave! Tente novamente.')  
+                    u.printErro(F'ERRO: {ex}')
+                u.printSeparador(f'{"="*70}') 
                 os.system('pause')
 
     def imprimirMenu(self):
+        u = self.utilView
         while True:
             os.system('cls')
-            print('Qual operação desja realizar?')
-            print('1 - Criar uma nave nova.')
-            print('2 - Buscar uma nave.')
-            print('3 - Listar todas as naves.')
-            print('4 - Atualizar uma nave.')
-            print('5 - Remover uma nave.')
-            print('0 - Sair')
+            u.printTitulo('Manipulação de Naves')
+            u.printInstrucao('Qual operação deseja realizar?')
+            u.printOpcao('1', 'Criar uma nave nova.')
+            u.printOpcao('2', 'Buscar uma nave.')
+            u.printOpcao('3', 'Listar todas as naves.')
+            u.printOpcao('4', 'Atualizar uma nave.')
+            u.printOpcao('5', 'Remover uma nave.')
+            print('')
+            u.printOpcao('0', 'Sair')
+            u.printSeparador(f'\n{"="*70}')
             
             op = self.utilView.receberValor(chave="opção", tipo=int, obrigatorio=True, validos=lambda x: x in range(0, 6))
             if op == 1: 
@@ -164,12 +187,13 @@ class NavesView:
                 break
 
 
-    def imprimir(self, naves):        
+    def imprimir(self, naves):
+        u = self.utilView        
         for nave in naves:
-            print('='*50)
-            self.utilView.imprimirAtributo('Id', nave.getIdNave(), '\n')
-            self.utilView.imprimirAtributo('Nome', nave.getNome(), '\n')
-            print('-'*50)
+            u.printSeparador(f'='*70)
+            self.utilView.imprimirAtributTitulo('Id', nave.getIdNave(), ' ')
+            self.utilView.imprimirAtributTitulo('Nome', nave.getNome(), '\n')
+            u.printSeparador('='*70)
             try:
                 fabricanteNome = self.fabricantesControlador.readFabricante(nave.getIdFabricante()).getNome() 
             except ValoresInvalidosException as ex:
@@ -180,17 +204,19 @@ class NavesView:
             self.utilView.imprimirAtributo('Passageiros', nave.getPassageiros(), '\n')
             self.utilView.imprimirAtributo('Capacidade de Carga', nave.getCapacidadeCarga(), '\n')
             self.utilView.imprimirAtributo('Preco', nave.getPreco(), '\n')
-        print('='*50)
+            u.printSeparador(f'{"="*70}\n\n')
     
-    def imprimirResumido(self, naves):        
+    def imprimirResumido(self, naves):   
+        u = self.utilView     
         for nave in naves:
-            print('='*50)
-            self.utilView.imprimirAtributo('Id', nave.getIdNave(), ' ')
-            self.utilView.imprimirAtributo('Nome', nave.getNome(), '\n')
-        print('='*50)
+            u.printSeparador('='*70)
+            self.utilView.imprimirAtributTitulo('Id', nave.getIdNave(), ' ')
+            self.utilView.imprimirAtributTitulo('Nome', nave.getNome(), '\n')
+        u.printSeparador('='*70)
     
     def receberValores(self):
-        print('Por favor digite as informações da nova nave:')
+        u = self.utilView
+        u.printInstrucao('Por favor digite as informações da nova nave:')
         nave = Nave()
         nave.setNome(self.utilView.receberValor(chave="nome", tipo=str, obrigatorio=True))  
         # Listar os fabricantes        
