@@ -1,4 +1,13 @@
 class Nave:
+    id_nave = None
+    id_fabricante = None
+    nome = None
+    modelo = None
+    tripulacao = None
+    passageiros = None
+    capacidade_carga = None
+    preco = None
+
     def getIdNave(self):
         return self.id_nave
 
