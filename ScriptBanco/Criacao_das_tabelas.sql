@@ -9,7 +9,7 @@ CREATE TABLE tb_usuario (
 );
 
 CREATE TABLE tb_fabricante (
-    id_fabricante        SERIAL,
+    id_fabricante       SERIAL,
     nome                VARCHAR(50) UNIQUE NOT NULL,
 
     CONSTRAINT pk_tb_marca_id_fabricante 
