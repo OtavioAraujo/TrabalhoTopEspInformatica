@@ -7,7 +7,7 @@ class NavesServico:
         self.navesRepositorio = NavesRepositorio()
 
     def createNave(self, nave):
-        self.navesRepositorio.createNave(nave)
+        return self.navesRepositorio.createNave(nave)
     
     def readNaves(self):
         return self.navesRepositorio.readNaves()
