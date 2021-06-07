@@ -1,3 +1,4 @@
+from Servicos.FabricantesServico import FabricantesServico
 from Compartilhados.utilitarios import utilitarios
 from Compartilhados.Excecoes.valoresInvalidosException import ValoresInvalidosException
 from Servicos.NavesServico import NavesServico
@@ -6,6 +7,8 @@ from Servicos.NavesServico import NavesServico
 class NaveControlador:
     def __init__(self):
         self.navesServico = NavesServico()
+        self.fabricanteServico = FabricantesServico()
+
 
     def createNave(self, nave):
         self.validarConsistensiaDeNave(nave)
@@ -42,6 +45,10 @@ class NaveControlador:
         nomeJaExiste = self.navesServico.nomeJaExiste(nave)
         if (nomeJaExiste):
             raise ValoresInvalidosException(menssagem=f"O nome informado já existe!")
+
+        fabricanteNaoExiste = self.fabricanteServico.readFabricante(nave.getIdFabricante()) == None
+        if (fabricanteNaoExiste):
+            raise ValoresInvalidosException(menssagem=f"A nave informada não existe!")
 
         # verificar se fabricante existe
     
