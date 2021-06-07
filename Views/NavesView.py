@@ -16,7 +16,7 @@ class NavesView:
     def createNave(self):
         u = self.utilView
         os.system('cls')
-        nave = self.receberValores()
+        nave = self.receberAtributos()
         
         try:
             naveCriada = self.navesControlador.createNave(nave)
@@ -214,16 +214,36 @@ class NavesView:
             self.utilView.imprimirAtributTitulo('Nome', nave.getNome(), '\n')
         u.printSeparador('='*70)
     
-    def receberValores(self):
+    def receberAtributos(self):
         u = self.utilView
-        u.printInstrucao('Por favor digite as informações da nova nave:')
         nave = Nave()
-        nave.setNome(self.utilView.receberValor(chave="nome", tipo=str, obrigatorio=True))  
-        # Listar os fabricantes        
-        nave.setIdFabricante(self.utilView.receberValor(chave="fabricante", tipo=int, obrigatorio=False))
-        nave.setModelo(self.utilView.receberValor(chave="modelo", tipo=str, obrigatorio=True))
-        nave.setTripulacao(self.utilView.receberValor(chave="tripulacao", tipo=int, obrigatorio=False))
-        nave.setPassageiros(self.utilView.receberValor(chave="passageiros", tipo=int, obrigatorio=False))
-        nave.setCapacidadeCarga(self.utilView.receberValor(chave="capacidade de carga", tipo=float, obrigatorio=False))
-        nave.setPreco(self.utilView.receberValor(chave="preco", tipo=float, obrigatorio=False))
+        atributos = ['nome', 'fabricante', 'modelo', 'tripulacao', 'passageiros', 'capacidadedecarga', 'preco']
+        for atributo in atributos:
+            os.system('cls')
+            self.imprimir([nave])
+            u.printInstrucao('Por favor digite as informações da nova nave:')        
+            nave = self.receberAtributo(atributo, nave)
         return nave
+
+
+    def receberAtributo(self, atributoChave, nave):
+        u = self.utilView
+        
+        if atributoChave == 'nome':
+            nave.setNome(self.utilView.receberValor(chave="nome", tipo=str, obrigatorio=True))  
+        elif atributoChave == 'fabricante':
+            # Listar os fabricantes        
+            nave.setIdFabricante(self.utilView.receberValor(chave="fabricante", tipo=int, obrigatorio=False, validos=lambda x: self.fabricantesControlador.readFabricante(x) != None ))
+        elif atributoChave == 'modelo':
+            nave.setModelo(self.utilView.receberValor(chave="modelo", tipo=str, obrigatorio=True))
+        elif atributoChave == 'tripulacao':
+            nave.setTripulacao(self.utilView.receberValor(chave="tripulacao", tipo=int, obrigatorio=False))
+        elif atributoChave == 'passageiros':
+            nave.setPassageiros(self.utilView.receberValor(chave="passageiros", tipo=int, obrigatorio=False))
+        elif atributoChave == 'capacidadedecarga':
+            nave.setCapacidadeCarga(self.utilView.receberValor(chave="capacidade de carga", tipo=float, obrigatorio=False))
+        elif atributoChave == 'preco':
+            nave.setPreco(self.utilView.receberValor(chave="preco", tipo=float, obrigatorio=False))
+        return nave
+        
+        
