@@ -1,3 +1,4 @@
+from Views.ImportacaoView import ImportacaoView
 import os
 from Views.ExportacaoView import ExportacaoView
 from Views.NavesView import NavesView
@@ -9,6 +10,8 @@ class MenuPrincipalView:
         self.utilView = utilitariosView()
         self.navesView = NavesView()
         self.exportacaoView = ExportacaoView()
+        self.importacaoView = ImportacaoView()
+
 
     def iniciarMenuPrincipal(self):
         u = self.utilView
@@ -35,7 +38,7 @@ class MenuPrincipalView:
             elif op == 4:
                 self.exportacaoView.exportarTodosOsDados()
             elif op == 5:
-                pass
+                self.importacaoView.importarNave()
             elif op == 0:
                 os.system('cls')
                 u.printInstrucao('Finalizando... volte sempre!')
