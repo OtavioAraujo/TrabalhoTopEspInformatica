@@ -1,3 +1,4 @@
+from Servicos.SwapiService import SwapiService
 import os
 import json
 from Servicos.NavesServico import NavesServico
@@ -11,6 +12,7 @@ class GeralControlador:
         self.fabricantesServico = FabricantesServico() 
         self.navesServico = NavesServico()        
         self.usuariosServico = UsuariosServico()
+        self.SwapiService = SwapiService()
     
     def exportarTodosOsDados(self):
         fabricantes = self.fabricantesServico.readFabricantes()
@@ -35,3 +37,11 @@ class GeralControlador:
         arquivoZip.writestr('DadosExportadosTopEspInf.json', listaTotalJson)
         arquivoZip.close()
         
+    def readNavesApiSwapi(self):
+        navesApi = self.SwapiService.readNavesApiSwapi()
+        naves = self.SwapiService.converteNavesApiParaNavesEntidade(navesApi)
+        return naves
+    
+    def createNaveApiSwapi(self, nave):
+        self.SwapiService.createNaveApiSwapi(nave)
+        pass
