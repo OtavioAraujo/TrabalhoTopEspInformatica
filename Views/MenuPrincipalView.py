@@ -23,7 +23,7 @@ class MenuPrincipalView:
             u.printOpcao('2', 'Manipular nave')
             u.printOpcao('3', 'Manipular fabricante')
             u.printOpcao('4', 'Exportar todos os dados')
-            u.printOpcao('5', 'Importar dados da API')
+            u.printOpcao('5', 'Importar nave')
             print('')
             u.printOpcao('0', 'Sair')
             u.printSeparador(f'\n{"="*70}')
