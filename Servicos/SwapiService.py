@@ -1,9 +1,11 @@
+from Controladores.NavesControlador import NaveControlador
 import requests
 from Repositorio.Entidades.Nave import Nave
 
 
 class SwapiService:
     def __init__(self):
+        self.naveControlador = NaveControlador()
         self.url_veiculos = 'https://swapi.dev/api/vehicles/'
         
     def readNavesApiSwapi(self):        
@@ -30,4 +32,4 @@ class SwapiService:
         return naveEntidade
 
     def createNaveApiSwapi(self, nave):
-        pass
+        self.naveControlador.createNave(nave)

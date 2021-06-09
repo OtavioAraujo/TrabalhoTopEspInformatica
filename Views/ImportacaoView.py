@@ -22,12 +22,13 @@ class ImportacaoView:
             
             if op != 0:
                 self.geralControlador.createNaveApiSwapi([n for n in navesSwapi if n.getIdNave() == op][0])
-                
+                os.system('cls')
                 u.printSeparador(f'{"="*70}') 
                 u.printSucesso('A nave foi importada com sucesso!')  
                 u.printSeparador(f'{"="*70}')
                 os.system('pause') 
-        except Exception as ex:                    
+        except Exception as ex:     
+            os.system('cls')               
             u.printSeparador(f'{"="*70}')
             u.printErro('Erro ao importar a nave! Tente novamente.')
             u.printErro(F'ERRO: {ex}')
