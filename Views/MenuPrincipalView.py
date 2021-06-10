@@ -2,6 +2,7 @@ from Views.ImportacaoView import ImportacaoView
 import os
 from Views.ExportacaoView import ExportacaoView
 from Views.NavesView import NavesView
+from Views.FabricantesView import FabricantesView
 from Views.Compartilhados.UtilitariosView import utilitariosView
 
 
@@ -9,6 +10,7 @@ class MenuPrincipalView:
     def __init__(self):
         self.utilView = utilitariosView()
         self.navesView = NavesView()
+        self.fabricantesView = FabricantesView()
         self.exportacaoView = ExportacaoView()
         self.importacaoView = ImportacaoView()
 
@@ -34,7 +36,7 @@ class MenuPrincipalView:
             elif op == 2:
                 self.navesView.imprimirMenu()
             elif op == 3:
-                pass
+                self.fabricantesView.imprimirMenu()
             elif op == 4:
                 self.exportacaoView.exportarTodosOsDados()
             elif op == 5:
