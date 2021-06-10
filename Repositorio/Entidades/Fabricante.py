@@ -1,4 +1,7 @@
 class Fabricante:
+    id_fabricante = None
+    nome = None
+
     def getIdFabricante(self):
         return self.id_fabricante    
     def setIdFabricante(self, id_fabricante):
