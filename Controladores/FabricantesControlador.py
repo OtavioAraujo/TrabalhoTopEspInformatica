@@ -23,6 +23,10 @@ class FabricantesControlador:
 
         return self.fabricantesServico.readFabricante(id_fabricante)
 
+    def readFabricantePorNome(self, nome):
+
+        return self.fabricantesServico.readFabricantePorNome(nome)
+
     def updateFabricante(self, fabricante):
 
         self.possuiId(fabricante.getIdFabricante())
