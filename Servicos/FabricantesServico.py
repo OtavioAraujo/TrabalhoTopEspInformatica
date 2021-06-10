@@ -15,6 +15,9 @@ class FabricantesServico:
     def readFabricante(self, id_fabricante):
         return self.fabricantesRepositorio.readFabricante(id_fabricante)
 
+    def readFabricantePorNome(self, nome):
+        return self.fabricantesRepositorio.readFabricantePorNome(nome)
+
     def updateFabricante(self, fabricante):
         self.fabricantesRepositorio.updateFabricante(fabricante)
 
