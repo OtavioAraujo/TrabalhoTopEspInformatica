@@ -55,6 +55,26 @@ class FabricantesRepositorio:
         else:
             return None
 
+    def readFabricantePorNome(self, nome):
+        con = self.conexao.conectar()
+        cur = con.cursor()
+
+        sql = f"""SELECT id_fabricante, 
+                         nome
+	              FROM tb_fabricante
+                  WHERE UPPER(tb_fabricante.nome) = '{nome.upper()}';"""
+
+        cur.execute(sql)
+        fabricanteBanco = cur.fetchall()
+        con.close()
+
+        if len(fabricanteBanco) > 0:
+            fabricanteEntidade = self.converterBancoParaEntidade(
+                fabricanteBanco[0])
+            return fabricanteEntidade
+        else:
+            return None
+
     def updateFabricante(self, fabricante):
         con = self.conexao.conectar()
         cur = con.cursor()
