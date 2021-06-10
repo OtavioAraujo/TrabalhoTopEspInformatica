@@ -7,7 +7,7 @@ class UsuariosServico:
         self.usuariosRepositorio = UsuariosRepositorio()
 
     def createUsuario(self, usuario):
-        self.usuariosRepositorio.createUsuario(usuario)
+        return self.usuariosRepositorio.createUsuario(usuario)
     
     def readUsuarios(self):
         return self.usuariosRepositorio.readUsuarios()

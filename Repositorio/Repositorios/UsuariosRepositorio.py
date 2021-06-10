@@ -17,11 +17,17 @@ class UsuariosRepositorio:
                       '{usuario.getEMail()}', 
                       '{usuario.getNome()}', 
                       '{usuario.getSenha()}'
-                  );"""
+                  ) RETURNING id_usuario;"""
 
         cur.execute(sql)        
-        con.commit()
+        
+        id_usuario = cur.fetchone()[0]  
+        usuario.setIdUsuario(id_usuario) 
+
+        con.commit()        
         con.close()
+
+        return usuario
 
     def readUsuarios(self):
         con = self.conexao.conectar()

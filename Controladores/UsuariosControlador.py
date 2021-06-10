@@ -9,7 +9,7 @@ class UsuariosControlador:
 
     def createUsuario(self, usuario):
         self.validarConsistensiaDeUsuario(usuario)
-        self.usuariosServico.createUsuario(usuario)
+        return self.usuariosServico.createUsuario(usuario)
 
     def readUsuarios(self):
         return self.usuariosServico.readUsuarios()
