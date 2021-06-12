@@ -197,4 +197,28 @@ class UsuariosView:
             usuario.setSenha(self.utilView.receberValor(chave="senha", tipo=int, obrigatorio=False))
         return usuario
         
+    def realizarLogin(self):        
+        u = self.utilView
+        os.system('cls')
+        u.printInstrucao('Por favor digite as suas informações:')        
+
+        email = self.utilView.receberValor(chave="E-Mail", tipo=str, obrigatorio=True)
+        senha = self.utilView.receberValor(chave="Senha", tipo=str, obrigatorio=True)
+        os.system('cls')
         
+        try:           
+            usuario = self.usuariosControlador.validarEmailSenha(email, senha)
+            if usuario == None:
+                u.printSeparador(f'{"="*70}') 
+                u.printErro('Usuário ou senha inválidos! Tente novamente.') 
+                u.printSeparador(f'{"="*70}') 
+                os.system('pause')
+            return usuario
+        except Exception as ex:
+            u.printSeparador(f'{"="*70}') 
+            u.printErro('Erro ao realizar o login! Tente novamente.')  
+            u.printErro(F'ERRO: {ex}')
+            u.printSeparador(f'{"="*70}')             
+            os.system('pause')
+            os.system('cls')
+            return None

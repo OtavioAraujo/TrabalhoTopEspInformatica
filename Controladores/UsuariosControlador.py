@@ -47,3 +47,6 @@ class UsuariosControlador:
         possuiId = self.usuariosServico.possuiId(id_usuario)
         if (not possuiId):
             raise ValoresInvalidosException(menssagem=f"O id da usuario informado não é válido!")
+
+    def validarEmailSenha(self, email, senha):
+        return self.usuariosServico.validarEmailSenha(email, senha)

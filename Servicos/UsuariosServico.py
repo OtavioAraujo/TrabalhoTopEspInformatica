@@ -35,8 +35,8 @@ class UsuariosServico:
 
         return vlrsObrgNaoPreech    
     
-    def emailJaExiste(self, usuario):
-        return self.usuariosRepositorio.emailJaExiste(usuario)
+    def emailJaExiste(self, email):
+        return self.usuariosRepositorio.emailJaExiste(email)
 
     def idValido(self, idUsuario):
         try:
@@ -49,3 +49,6 @@ class UsuariosServico:
     
     def possuiId(self, id_usuario):
         return id_usuario != None
+
+    def validarEmailSenha(self, email, senha):
+        return self.usuariosRepositorio.validarEmailSenha(email, senha)

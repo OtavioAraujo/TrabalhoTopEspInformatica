@@ -25,12 +25,9 @@ class MenuLoginView:
 
             op = self.utilView.receberValor(chave="opção", tipo=int, obrigatorio=True, validos=lambda x: x in range(0, 3))
             if op == 1:
-                usuarioLogado = Usuario()
-                usuarioLogado.setIdUsuario(1)
-                usuarioLogado.setEMail('email@email.com.br')
-                usuarioLogado.setNome('jão')
-                usuarioLogado.setSenha('123')
-                self.menuPrincipalView.iniciarMenuPrincipal(usuarioLogado)
+                usuarioLogado = self.usuariosView.realizarLogin()      
+                if usuarioLogado != None:         
+                    self.menuPrincipalView.iniciarMenuPrincipal(usuarioLogado)    
             elif op == 2:
                 self.usuariosView.createUsuario()
             elif op == 0:
