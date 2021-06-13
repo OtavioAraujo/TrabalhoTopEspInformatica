@@ -1,3 +1,4 @@
+from Views.UsuariosView import UsuariosView
 from Views.ImportacaoView import ImportacaoView
 import os
 from Views.ExportacaoView import ExportacaoView
@@ -13,15 +14,16 @@ class MenuPrincipalView:
         self.fabricantesView = FabricantesView()
         self.exportacaoView = ExportacaoView()
         self.importacaoView = ImportacaoView()
+        self.usuariosView = UsuariosView()
 
 
-    def iniciarMenuPrincipal(self):
+    def iniciarMenuPrincipal(self, usuarioLogado):
         u = self.utilView
         while True:
             os.system('cls')
             u.printTitulo('Menu Principal')
             u.printInstrucao('Qual operação deseja realizar?')
-            u.printOpcao('1', 'Manipular usuários')
+            u.printOpcao('1', 'Visualizar perfil')
             u.printOpcao('2', 'Manipular nave')
             u.printOpcao('3', 'Manipular fabricante')
             u.printOpcao('4', 'Exportar todos os dados')
@@ -32,7 +34,9 @@ class MenuPrincipalView:
 
             op = self.utilView.receberValor(chave="opção", tipo=int, obrigatorio=True, validos=lambda x: x in range(0, 6))
             if op == 1: 
-                pass
+                usuarioLogado = self.usuariosView.imprimirMenu(usuarioLogado)
+                if usuarioLogado == None:
+                    break 
             elif op == 2:
                 self.navesView.imprimirMenu()
             elif op == 3:
@@ -44,5 +48,5 @@ class MenuPrincipalView:
             elif op == 0:
                 os.system('cls')
                 u.printInstrucao('Finalizando... volte sempre!')
-                break
+                break      
             

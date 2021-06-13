@@ -17,11 +17,17 @@ class UsuariosRepositorio:
                       '{usuario.getEMail()}', 
                       '{usuario.getNome()}', 
                       '{usuario.getSenha()}'
-                  );"""
+                  ) RETURNING id_usuario;"""
 
         cur.execute(sql)        
-        con.commit()
+        
+        id_usuario = cur.fetchone()[0]  
+        usuario.setIdUsuario(id_usuario) 
+
+        con.commit()        
         con.close()
+
+        return usuario
 
     def readUsuarios(self):
         con = self.conexao.conectar()
@@ -29,8 +35,7 @@ class UsuariosRepositorio:
 
         sql = f"""SELECT id_usuario, 
                          email, 
-                         nome,
-                         senha
+                         nome                         
 	              FROM tb_usuario;"""
 
         cur.execute(sql)  
@@ -45,11 +50,10 @@ class UsuariosRepositorio:
 
         sql = f"""SELECT id_usuario, 
                          email, 
-                         nome,
-                         senha
+                         nome                         
 	              FROM tb_usuario
-                  WHERE tb_usuario.id_usuario = {id_usuario};"""
-
+                  WHERE tb_usuario.id_usuario = {id_usuario}"""
+        
         cur.execute(sql)  
         usuarioBanco = cur.fetchall()      
         con.close()
@@ -96,7 +100,8 @@ class UsuariosRepositorio:
         usuarioEntidade.setIdUsuario(usuarioBanco[0])
         usuarioEntidade.setEMail(usuarioBanco[1])
         usuarioEntidade.setNome(usuarioBanco[2])
-        usuarioEntidade.setSenha(usuarioBanco[3])
+        if len(usuarioBanco) == 4:
+            usuarioEntidade.setSenha(usuarioBanco[3])
         return usuarioEntidade
 
     def converterListaBancoParaListaEntidade(self, listaUsuarioBanco):
@@ -121,3 +126,24 @@ class UsuariosRepositorio:
             return True
         else:
             return False
+    
+    def validarEmailSenha(self, email, senha):
+        con = self.conexao.conectar()
+        cur = con.cursor()
+
+        sql = f"""SELECT id_usuario, 
+                         email, 
+                         nome                         
+	              FROM tb_usuario
+                  WHERE  tb_usuario.email = '{email}'
+                  AND tb_usuario.senha = '{senha}'"""
+        
+        cur.execute(sql)  
+        usuarioBanco = cur.fetchall()      
+        con.close()
+        
+        if len(usuarioBanco) > 0:
+            usuarioEntidade = self.converterBancoParaEntidade(usuarioBanco[0])
+            return usuarioEntidade
+        else:
+            return None

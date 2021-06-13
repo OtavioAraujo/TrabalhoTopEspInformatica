@@ -1,4 +1,9 @@
 class Usuario:
+    id_usuario = None
+    email = None
+    nome = None
+    senha = None
+
     def getIdUsuario(self):
         return self.id_usuario
     def setIdUsuario(self, id_usuario):

@@ -1,3 +1,5 @@
+from Repositorio.Entidades.Usuario import Usuario
+from Views.UsuariosView import UsuariosView
 import os
 from Views.MenuPrincipalView import MenuPrincipalView
 from Views.Compartilhados.UtilitariosView import utilitariosView
@@ -7,7 +9,8 @@ class MenuLoginView:
     def __init__(self):
         self.utilView = utilitariosView()
         self.menuPrincipalView = MenuPrincipalView()
-
+        self.usuariosView = UsuariosView()
+        
     def iniciarMenuLogin(self):
         u = self.utilView
         while True:
@@ -22,9 +25,11 @@ class MenuLoginView:
 
             op = self.utilView.receberValor(chave="opção", tipo=int, obrigatorio=True, validos=lambda x: x in range(0, 3))
             if op == 1:
-                self.menuPrincipalView.iniciarMenuPrincipal()
+                usuarioLogado = self.usuariosView.realizarLogin()      
+                if usuarioLogado != None:         
+                    self.menuPrincipalView.iniciarMenuPrincipal(usuarioLogado)    
             elif op == 2:
-                pass
+                self.usuariosView.createUsuario()
             elif op == 0:
                 os.system('cls')
                 u.printInstrucao('Finalizando... volte sempre!')

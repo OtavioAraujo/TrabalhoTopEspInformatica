@@ -9,7 +9,7 @@ class UsuariosControlador:
 
     def createUsuario(self, usuario):
         self.validarConsistensiaDeUsuario(usuario)
-        self.usuariosServico.createUsuario(usuario)
+        return self.usuariosServico.createUsuario(usuario)
 
     def readUsuarios(self):
         return self.usuariosServico.readUsuarios()
@@ -47,3 +47,9 @@ class UsuariosControlador:
         possuiId = self.usuariosServico.possuiId(id_usuario)
         if (not possuiId):
             raise ValoresInvalidosException(menssagem=f"O id da usuario informado não é válido!")
+
+    def validarEmailSenha(self, email, senha):
+        return self.usuariosServico.validarEmailSenha(email, senha)
+    
+    def validarFormatoEmail(self, email):
+        return self.usuariosServico.validarFormatoEmail(email)

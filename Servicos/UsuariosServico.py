@@ -1,3 +1,4 @@
+import re
 from Repositorio.Repositorios.UsuariosRepositorio import UsuariosRepositorio
 
 
@@ -7,7 +8,7 @@ class UsuariosServico:
         self.usuariosRepositorio = UsuariosRepositorio()
 
     def createUsuario(self, usuario):
-        self.usuariosRepositorio.createUsuario(usuario)
+        return self.usuariosRepositorio.createUsuario(usuario)
     
     def readUsuarios(self):
         return self.usuariosRepositorio.readUsuarios()
@@ -35,8 +36,8 @@ class UsuariosServico:
 
         return vlrsObrgNaoPreech    
     
-    def emailJaExiste(self, usuario):
-        return self.usuariosRepositorio.emailJaExiste(usuario)
+    def emailJaExiste(self, email):
+        return self.usuariosRepositorio.emailJaExiste(email)
 
     def idValido(self, idUsuario):
         try:
@@ -49,3 +50,14 @@ class UsuariosServico:
     
     def possuiId(self, id_usuario):
         return id_usuario != None
+
+    def validarEmailSenha(self, email, senha):
+        return self.usuariosRepositorio.validarEmailSenha(email, senha)
+    
+    def validarFormatoEmail(self, email):
+        regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+        if(re.search(regex, email)):
+            return True    
+        else:
+            return False
+        
