@@ -50,3 +50,6 @@ class UsuariosControlador:
 
     def validarEmailSenha(self, email, senha):
         return self.usuariosServico.validarEmailSenha(email, senha)
+    
+    def validarFormatoEmail(self, email):
+        return self.usuariosServico.validarFormatoEmail(email)

@@ -85,7 +85,7 @@ class UsuariosView:
                     usuarioLogado.setNome(valor)
                     houveEdicao = True
                 elif op == 2: 
-                    valor = self.utilView.receberValor(chave="informe o seu novo e-mail", tipo=str, obrigatorio=True)
+                    valor = self.utilView.receberValor(chave="informe o seu novo e-mail", tipo=str, obrigatorio=True, validos=lambda x:  self.usuariosControlador.validarFormatoEmail(x))
                     usuarioLogado.setEMail(valor)
                     houveEdicao = True
                 elif op == 3: 
@@ -196,7 +196,7 @@ class UsuariosView:
         if atributoChave == 'nome':
             usuario.setNome(self.utilView.receberValor(chave="nome", tipo=str, obrigatorio=True))          
         elif atributoChave == 'email':
-            usuario.setEMail(self.utilView.receberValor(chave="email", tipo=str, obrigatorio=True))
+            usuario.setEMail(self.utilView.receberValor(chave="email", tipo=str, obrigatorio=True, validos=lambda x:  self.usuariosControlador.validarFormatoEmail(x)))
         elif atributoChave == 'senha':
             usuario.setSenha(self.utilView.receberValor(chave="senha", tipo=int, obrigatorio=False))
         return usuario
