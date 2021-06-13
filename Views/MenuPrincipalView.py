@@ -32,7 +32,9 @@ class MenuPrincipalView:
 
             op = self.utilView.receberValor(chave="opção", tipo=int, obrigatorio=True, validos=lambda x: x in range(0, 6))
             if op == 1: 
-                self.usuariosView.imprimirMenu(usuarioLogado)
+                usuarioLogado = self.usuariosView.imprimirMenu(usuarioLogado)
+                if usuarioLogado == None:
+                    break 
             elif op == 2:
                 self.navesView.imprimirMenu()
             elif op == 3:
@@ -44,5 +46,5 @@ class MenuPrincipalView:
             elif op == 0:
                 os.system('cls')
                 u.printInstrucao('Finalizando... volte sempre!')
-                break
+                break      
             

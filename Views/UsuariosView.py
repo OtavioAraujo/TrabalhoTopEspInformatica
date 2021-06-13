@@ -92,7 +92,7 @@ class UsuariosView:
                     # fazer validação de senha
                     valor = self.utilView.receberValor(chave="informe a sua nova senha", tipo=str, obrigatorio=True)
                     usuarioLogado.setSenha(valor)
-                    houveEdicao = True
+                    houveEdicao = True        
 
         if houveEdicao:
             os.system('cls')
@@ -112,6 +112,8 @@ class UsuariosView:
                     u.printErro(F'ERRO: {ex}')
                 u.printSeparador(f'{"="*70}') 
                 os.system('pause')
+                
+        return usuarioLogado
 
     def deleteUsuario(self, usuarioLogado):
         u = self.utilView
@@ -148,12 +150,14 @@ class UsuariosView:
             
             op = self.utilView.receberValor(chave="opção", tipo=int, obrigatorio=True, validos=lambda x: x in range(0, 3))
             if op == 1:
-                self.updateUsuario(usuarioLogado)
+                usuarioLogado = self.updateUsuario(usuarioLogado)
             elif op == 2:
                 self.deleteUsuario(usuarioLogado)
-                # retornar a tela de login
+                usuarioLogado = None
+                break
             elif op == 0:
                 break
+        return usuarioLogado
 
 
     def imprimir(self, usuarios):
