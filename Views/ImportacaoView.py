@@ -15,7 +15,7 @@ class ImportacaoView:
         os.system('cls')
         try:
             navesSwapi = self.geralControlador.readNavesApiSwapi()
-            self.navesView.imprimir(navesSwapi)
+            self.navesView.imprimir(navesSwapi, navesDTO=True)
 
             u.printInstrucao('Digite o ID da nave que deseja importar (digite 0 para cancelar):')
             op = self.utilView.receberValor(chave="id da nave", tipo=int, obrigatorio=True, validos=lambda x: x == 0 or x in [n.getIdNave() for n in navesSwapi if n.getIdNave() == x])

@@ -1,3 +1,4 @@
+from Views.FabricantesView import FabricantesView
 from Compartilhados.Excecoes.valoresInvalidosException import ValoresInvalidosException
 import os
 from Views.Compartilhados.UtilitariosView import utilitariosView
@@ -12,6 +13,7 @@ class NavesView:
         self.utilView = utilitariosView()
         self.navesControlador = NaveControlador()
         self.fabricantesControlador = FabricantesControlador()
+        self.fabricantesView = FabricantesView()
 
     def createNave(self):
         u = self.utilView
@@ -94,8 +96,7 @@ class NavesView:
                         valor = self.utilView.receberValor(chave="informe o novo valor de nome", tipo=str, obrigatorio=True)
                         nave.setNome(valor)
                     elif op == 2: 
-                        # Imprimir resumido fornecedores
-                        print('Imprimir resumido fornecedores')
+                        self.fabricantesView.imprimirFabricantes(resumido=True)
                         valor = self.utilView.receberValor(chave="informe o novo valor de fabricante", tipo=int,)
                         nave.setIdFabricante(valor)
                     elif op == 3: 
@@ -187,17 +188,20 @@ class NavesView:
                 break
 
 
-    def imprimir(self, naves):
+    def imprimir(self, naves, navesDTO=False):
         u = self.utilView        
         for nave in naves:
             u.printSeparador(f'='*70)
             self.utilView.imprimirAtributTitulo('Id', nave.getIdNave(), ' ')
             self.utilView.imprimirAtributTitulo('Nome', nave.getNome(), '\n')
             u.printSeparador('='*70)
-            try:
-                fabricanteNome = self.fabricantesControlador.readFabricante(nave.getIdFabricante()).getNome() 
-            except ValoresInvalidosException as ex:
-                fabricanteNome = 'Desconhecido'
+            if navesDTO:
+                fabricanteNome = nave.getNomeFabricante()
+            else:
+                try:
+                    fabricanteNome = self.fabricantesControlador.readFabricante(nave.getIdFabricante()).getNome() 
+                except ValoresInvalidosException as ex:
+                    fabricanteNome = 'Desconhecido'
             self.utilView.imprimirAtributo('Fabricante', fabricanteNome, '\n')
             self.utilView.imprimirAtributo('Modelo', nave.getModelo(), '\n')
             self.utilView.imprimirAtributo('Tripulacao', nave.getTripulacao(), '\n')

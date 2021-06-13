@@ -74,8 +74,7 @@ class FabricantesRepositorio:
         con.close()
 
         if len(fabricanteBanco) > 0:
-            fabricanteEntidade = self.converterBancoParaEntidade(
-                fabricanteBanco[0])
+            fabricanteEntidade = self.converterBancoParaEntidade(fabricanteBanco[0])
             return fabricanteEntidade
         else:
             return None

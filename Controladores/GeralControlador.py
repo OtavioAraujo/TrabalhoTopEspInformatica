@@ -39,9 +39,8 @@ class GeralControlador:
         
     def readNavesApiSwapi(self):
         navesApi = self.SwapiService.readNavesApiSwapi()
-        naves = self.SwapiService.converteNavesApiParaNavesEntidade(navesApi)
+        naves = self.SwapiService.converteNavesApiParaNavesDTO(navesApi)
         return naves
     
     def createNaveApiSwapi(self, nave):
         self.SwapiService.createNaveApiSwapi(nave)
-        pass
