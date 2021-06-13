@@ -50,9 +50,7 @@ class FabricantesControlador:
         if (nomeJaExiste):
             raise ValoresInvalidosException(
                 menssagem=f"O nome informado já existe!")
-
-        # verificar se fabricante existe
-
+                
     def possuiId(self, id_fabricante):
         possuiId = self.fabricantesServico.possuiId(id_fabricante)
         if (not possuiId):

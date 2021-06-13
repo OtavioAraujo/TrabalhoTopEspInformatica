@@ -49,8 +49,6 @@ class NaveControlador:
         fabricanteNaoExiste = self.fabricanteServico.readFabricante(nave.getIdFabricante()) == None
         if (fabricanteNaoExiste):
             raise ValoresInvalidosException(menssagem=f"A nave informada não existe!")
-
-        # verificar se fabricante existe
     
     def possuiId(self, id_nave):
         possuiId = self.navesServico.possuiId(id_nave)
