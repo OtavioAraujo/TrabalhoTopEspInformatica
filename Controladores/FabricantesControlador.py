@@ -9,7 +9,7 @@ class FabricantesControlador:
 
     def createFabricante(self, fabricante):
         self.validarConsistensiaDeFabricante(fabricante)
-        self.fabricantesServico.createFabricante(fabricante)
+        return self.fabricantesServico.createFabricante(fabricante)
 
     def readFabricantes(self):
         return self.fabricantesServico.readFabricantes()

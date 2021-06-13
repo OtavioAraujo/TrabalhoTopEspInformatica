@@ -163,16 +163,16 @@ class FabricantesView:
         u = self.utilView        
         for fabricante in fabricantes:
             u.printSeparador(f'='*70)
-            self.utilView.imprimirAtributTitulo('Id', fabricante.id_fabricante, ' ')
-            self.utilView.imprimirAtributTitulo('Nome', fabricante.nome, '\n')
+            self.utilView.imprimirAtributTitulo('Id', fabricante.getIdFabricante(), ' ')
+            self.utilView.imprimirAtributTitulo('Nome', fabricante.getNome(), '\n')
             u.printSeparador(f'{"="*70}\n\n')
     
     def imprimirResumido(self, fabricantes):   
         u = self.utilView     
         for fabricante in fabricantes:
             u.printSeparador('='*70)
-            self.utilView.imprimirAtributTitulo('Id', fabricante.id_fabricante(), ' ')
-            self.utilView.imprimirAtributTitulo('Nome', fabricante.nome, '\n')
+            self.utilView.imprimirAtributTitulo('Id', fabricante.getIdFabricante(), ' ')
+            self.utilView.imprimirAtributTitulo('Nome', fabricante.getNome(), '\n')
         u.printSeparador('='*70)
     
     def receberAtributos(self):

@@ -7,7 +7,7 @@ class FabricantesServico:
         self.fabricantesRepositorio = FabricantesRepositorio()
 
     def createFabricante(self, fabricante):
-        self.fabricantesRepositorio.createFabricante(fabricante)
+        return self.fabricantesRepositorio.createFabricante(fabricante)
     
     def readFabricantes(self):
         return self.fabricantesRepositorio.readFabricantes()

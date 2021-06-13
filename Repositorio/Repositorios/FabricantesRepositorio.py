@@ -14,11 +14,16 @@ class FabricantesRepositorio:
                       nome
                   ) VALUES (
                       '{fabricante.getNome()}'
-                  );"""
+                  ) RETURNING id_fabricante;"""
 
         cur.execute(sql)
+        id_fabricante = cur.fetchone()[0]  
+        fabricante.setIdFabricante(id_fabricante)  
+
         con.commit()
         con.close()
+        
+        return fabricante
 
     def readFabricantes(self):
         con = self.conexao.conectar()
