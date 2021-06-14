@@ -236,7 +236,7 @@ class NavesView:
         if atributoChave == 'nome':
             nave.setNome(self.utilView.receberValor(chave="nome", tipo=str, obrigatorio=True))  
         elif atributoChave == 'fabricante':
-            # Listar os fabricantes        
+            self.fabricantesView.imprimirFabricantes(resumido=True)        
             nave.setIdFabricante(self.utilView.receberValor(chave="fabricante", tipo=int, obrigatorio=False, validos=lambda x: self.fabricantesControlador.readFabricante(x) != None ))
         elif atributoChave == 'modelo':
             nave.setModelo(self.utilView.receberValor(chave="modelo", tipo=str, obrigatorio=True))
