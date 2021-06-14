@@ -1,5 +1,6 @@
 from Compartilhados.Excecoes.valoresInvalidosException import ValoresInvalidosException
 import os
+import copy
 from Views.Compartilhados.UtilitariosView import utilitariosView
 from Controladores.UsuariosControlador import UsuariosControlador
 from Controladores.FabricantesControlador import FabricantesControlador
@@ -65,11 +66,12 @@ class UsuariosView:
             u.printSeparador(f'{"="*70}')
 
     def updateUsuario(self, usuarioLogado):
+        usuarioEmEdicao = copy.deepcopy(usuarioLogado)
         u = self.utilView 
         houveEdicao = False 
         while True:
             os.system('cls')
-            self.imprimir([usuarioLogado])
+            self.imprimir([usuarioEmEdicao])
             u.printInstrucao('informe qual valor você quer alterar: ')
             u.printOpcao('1', 'Nome')
             u.printOpcao('2', 'E-Mail')
@@ -82,21 +84,21 @@ class UsuariosView:
             else:
                 if op == 1: 
                     valor = self.utilView.receberValor(chave="informe o seu novo nome", tipo=str, obrigatorio=True)
-                    usuarioLogado.setNome(valor)
+                    usuarioEmEdicao.setNome(valor)
                     houveEdicao = True
                 elif op == 2: 
                     valor = self.utilView.receberValor(chave="informe o seu novo e-mail", tipo=str, obrigatorio=True, validos=lambda x:  self.usuariosControlador.validarFormatoEmail(x))
-                    usuarioLogado.setEMail(valor)
+                    usuarioEmEdicao.setEMail(valor)
                     houveEdicao = True
                 elif op == 3: 
                     # fazer validação de senha
                     valor = self.utilView.receberValor(chave="informe a sua nova senha", tipo=str, obrigatorio=True)
-                    usuarioLogado.setSenha(valor)
+                    usuarioEmEdicao.setSenha(valor)
                     houveEdicao = True        
 
-        if houveEdicao:
+        if houveEdicao:            
             os.system('cls')
-            self.imprimir([usuarioLogado])
+            self.imprimir([usuarioEmEdicao])
             u.printInstrucao('Deseja salvar as alterações?')
             u.printOpcao('1', 'Sim')
             u.printOpcao('2', 'Não')
@@ -105,13 +107,14 @@ class UsuariosView:
                 os.system('cls')
                 u.printSeparador(f'{"="*70}') 
                 try:
-                    self.usuariosControlador.updateUsuario(usuarioLogado)
+                    self.usuariosControlador.updateUsuario(usuarioEmEdicao)
                     u.printSucesso('A usuario foi atualizado com sucesso!')  
+                    usuarioLogado = copy.deepcopy(usuarioEmEdicao)
                 except Exception as ex:
                     u.printErro('Erro ao atualizar o usuario! Tente novamente.')  
                     u.printErro(F'ERRO: {ex}')
                 u.printSeparador(f'{"="*70}') 
-                os.system('pause')
+                os.system('pause')                
                 
         return usuarioLogado
 
