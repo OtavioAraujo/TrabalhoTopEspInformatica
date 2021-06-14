@@ -91,10 +91,11 @@ class UsuariosView:
                     usuarioEmEdicao.setEMail(valor)
                     houveEdicao = True
                 elif op == 3: 
-                    # fazer validação de senha
+                    senhaAntiga = self.utilView.receberValor(chave="valor da sua senha antiga", tipo=str, obrigatorio=True,  validos=lambda x:  self.usuariosControlador.validarEmailSenha(usuarioLogado.getEMail(), x) != None)
                     valor = self.utilView.receberValor(chave="informe a sua nova senha", tipo=str, obrigatorio=True)
                     usuarioEmEdicao.setSenha(valor)
-                    houveEdicao = True        
+                    houveEdicao = True     
+                       
 
         if houveEdicao:            
             os.system('cls')
