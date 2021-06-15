@@ -35,7 +35,8 @@ class UsuariosRepositorio:
 
         sql = f"""SELECT id_usuario, 
                          email, 
-                         nome                         
+                         nome,
+                         senha                     
 	              FROM tb_usuario;"""
 
         cur.execute(sql)  
@@ -50,7 +51,8 @@ class UsuariosRepositorio:
 
         sql = f"""SELECT id_usuario, 
                          email, 
-                         nome                         
+                         nome,
+                         senha                    
 	              FROM tb_usuario
                   WHERE tb_usuario.id_usuario = {id_usuario}"""
         
@@ -100,8 +102,7 @@ class UsuariosRepositorio:
         usuarioEntidade.setIdUsuario(usuarioBanco[0])
         usuarioEntidade.setEMail(usuarioBanco[1])
         usuarioEntidade.setNome(usuarioBanco[2])
-        if len(usuarioBanco) == 4:
-            usuarioEntidade.setSenha(usuarioBanco[3])
+        usuarioEntidade.setSenha(usuarioBanco[3])
         return usuarioEntidade
 
     def converterListaBancoParaListaEntidade(self, listaUsuarioBanco):
@@ -133,7 +134,8 @@ class UsuariosRepositorio:
 
         sql = f"""SELECT id_usuario, 
                          email, 
-                         nome                         
+                         nome,
+                         senha                       
 	              FROM tb_usuario
                   WHERE  tb_usuario.email = '{email}'
                   AND tb_usuario.senha = '{senha}'"""
