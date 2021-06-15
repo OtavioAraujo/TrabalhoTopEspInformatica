@@ -1,3 +1,4 @@
+from Views.SobreView import SobreView
 from Repositorio.Entidades.Usuario import Usuario
 from Views.UsuariosView import UsuariosView
 import os
@@ -10,6 +11,7 @@ class MenuLoginView:
         self.utilView = utilitariosView()
         self.menuPrincipalView = MenuPrincipalView()
         self.usuariosView = UsuariosView()
+        self.SobreView = SobreView()
         
     def iniciarMenuLogin(self):
         u = self.utilView
@@ -19,17 +21,20 @@ class MenuLoginView:
             u.printInstrucao('Qual operação deseja realizar?')
             u.printOpcao('1', 'Logar')
             u.printOpcao('2', 'Criar uma conta')
+            u.printOpcao('3', 'Sobre')
             print('')
             u.printOpcao('0', 'Sair')
             u.printSeparador(f'\n{"="*70}')
 
-            op = self.utilView.receberValor(chave="opção", tipo=int, obrigatorio=True, validos=lambda x: x in range(0, 3))
+            op = self.utilView.receberValor(chave="opção", tipo=int, obrigatorio=True, validos=lambda x: x in range(0, 4))
             if op == 1:
                 usuarioLogado = self.usuariosView.realizarLogin()      
                 if usuarioLogado != None:         
                     self.menuPrincipalView.iniciarMenuPrincipal(usuarioLogado)    
             elif op == 2:
                 self.usuariosView.createUsuario()
+            elif op == 3:
+                self.SobreView.imprimirSobre()
             elif op == 0:
                 os.system('cls')
                 u.printInstrucao('Finalizando... volte sempre!')
