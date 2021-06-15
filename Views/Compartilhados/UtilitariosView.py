@@ -14,25 +14,26 @@ class utilitariosView:
         e = self.estilos
         print(f'{e.atributoChave(f"{chave}:")} {e.atributoValorTitulo(valor if valor != None else "Desconhecido"):>5}', end=final)
 
-    def receberValor(self, chave, tipo, obrigatorio=False, validos=None, larguraInt=23, casasDec=2):
+    def receberValor(self, valorPrint=None, chave="", tipo=None, obrigatorio=False, validos=None, larguraInt=23, casasDec=2):
+        valorPrint = str(valorPrint) if valorPrint != None else chave
         while True:
             try:
                 valor = self.inputValor(f'{chave.capitalize()}: ').strip()
                 if obrigatorio and valor == "":
-                    self.printErro(f'O {chave.lower()} deve ser informado.')  
+                    self.printErro(f'O {valorPrint.lower()} deve ser informado.')  
                     continue            
                 if tipo == float and len(valor) > larguraInt:
-                    self.printErro(f'O {chave.lower()} deve ter no máximo {larguraInt - casasDec} casas inteiras e {casasDec} casas decimais.')  
+                    self.printErro(f'O {valorPrint.lower()} deve ter no máximo {larguraInt - casasDec} casas inteiras e {casasDec} casas decimais.')  
                     continue
                 if tipo == float and valor[::-1].find('.') > casasDec:
-                    self.printErro(f'O {chave.lower()} deve ter no máximo {casasDec} casas decimais.')  
+                    self.printErro(f'O {valorPrint.lower()} deve ter no máximo {casasDec} casas decimais.')  
                     continue  
                 valor = None if valor == "" else tipo(valor)
                 if validos != None and not validos(valor):
                     raise Exception()                                    
                 return valor                
             except:
-                self.printErro(f'O {chave.lower()} informado está inválido. Por favor digite novamente.')
+                self.printErro(f'O {valorPrint.lower()} informado está inválido. Por favor digite novamente.')
                 continue       
             
     def printInstrucao(self, texto):

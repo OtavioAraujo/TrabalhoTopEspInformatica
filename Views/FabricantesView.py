@@ -32,7 +32,7 @@ class FabricantesView:
 
     def readFabricante(self):
         os.system('cls')
-        id_fabricante = self.utilView.receberValor(chave="digite o id do fabricante que deseja vizualizar", tipo=int, obrigatorio=True)
+        id_fabricante = self.utilView.receberValor(valorPrint="id do fabricante", chave="digite o id do fabricante que deseja vizualizar", tipo=int, obrigatorio=True)
         self.imprimirFabricantes(id_fabricante=id_fabricante, resumido=False)
         os.system('pause')
 
@@ -67,7 +67,7 @@ class FabricantesView:
         u = self.utilView
         os.system('cls')
         self.imprimirFabricantes()        
-        idFabricante = self.utilView.receberValor(chave="informe o id do fabricante que será alterado (Digite 0 para cancelar)", tipo=int, obrigatorio=True, validos=lambda x: x == 0 or self.fabricantesControlador.readFabricante(x) != None )        
+        idFabricante = self.utilView.receberValor(valorPrint="id do fabricante", chave="informe o id do fabricante que será alterado (Digite 0 para cancelar)", tipo=int, obrigatorio=True, validos=lambda x: x == 0 or self.fabricantesControlador.readFabricante(x) != None )        
         if idFabricante != 0:
             fabricante = self.fabricantesControlador.readFabricante(idFabricante)
             
@@ -109,7 +109,7 @@ class FabricantesView:
         u = self.utilView
         os.system('cls')
         self.imprimirFabricantes()
-        idFabricante = self.utilView.receberValor(chave="informe o id do fabricante que será removido (Digite 0 para cancelar)", tipo=int, obrigatorio=True, validos=lambda x: x == 0 or self.fabricantesControlador.readFabricante(x) != None )
+        idFabricante = self.utilView.receberValor(valorPrint="id do fabricante", chave="informe o id do fabricante que será removido (Digite 0 para cancelar)", tipo=int, obrigatorio=True, validos=lambda x: x == 0 or self.fabricantesControlador.readFabricante(x) != None )
         if idFabricante != 0:
             self.imprimirFabricantes(idFabricante, False)
             u.printInstrucao(f'Tem certeza que quer excluir esse fabricante?')

@@ -18,19 +18,26 @@ class NavesView:
     def createNave(self):
         u = self.utilView
         os.system('cls')
-        nave = self.receberAtributos()
-        
-        try:
-            naveCriada = self.navesControlador.createNave(nave)
+        fabricantes = self.fabricantesControlador.readFabricantes()
+        if len(fabricantes) > 0:
+            nave = self.receberAtributos()
+            
+            try:
+                naveCriada = self.navesControlador.createNave(nave)
+                os.system('cls')
+                u.printSeparador(f'{"="*70}')
+                u.printSucesso('Nave criada com sucesso!')
+                self.imprimir([naveCriada])
+            except Exception as ex:
+                os.system('cls')
+                u.printSeparador(f'{"="*70}')
+                u.printErro('Erro ao criar a nave! Tente novamente.')
+                u.printErro(F'ERRO: {ex}')
+                u.printSeparador(f'{"="*70}') 
+        else:
             os.system('cls')
             u.printSeparador(f'{"="*70}')
-            u.printSucesso('Nave criada com sucesso!')
-            self.imprimir([naveCriada])
-        except Exception as ex:
-            os.system('cls')
-            u.printSeparador(f'{"="*70}')
-            u.printErro('Erro ao criar a nave! Tente novamente.')
-            u.printErro(F'ERRO: {ex}')
+            u.printErro('Não existe nenhum fabricante cadastrado.\nCadastre um fabricante antes de cadastrar uma nave!')
             u.printSeparador(f'{"="*70}') 
         os.system('pause')
 
@@ -71,7 +78,7 @@ class NavesView:
         u = self.utilView
         os.system('cls')
         self.imprimirNaves()        
-        idNave = self.utilView.receberValor(chave="informe o id da nave que será alterada (Digite 0 para cancelar)", tipo=int, obrigatorio=True, validos=lambda x: x == 0 or self.navesControlador.readNave(x) != None )        
+        idNave = self.utilView.receberValor(valorPrint="id da nave", chave="informe o id da nave que será alterada (Digite 0 para cancelar)", tipo=int, obrigatorio=True, validos=lambda x: x == 0 or self.navesControlador.readNave(x) != None )        
         if idNave != 0:
             nave = self.navesControlador.readNave(idNave)
             
@@ -138,7 +145,7 @@ class NavesView:
         u = self.utilView
         os.system('cls')
         self.imprimirNaves()
-        idNave = self.utilView.receberValor(chave="informe o id da nave que será removida (Digite 0 para cancelar)", tipo=int, obrigatorio=True, validos=lambda x: x == 0 or self.navesControlador.readNave(x) != None )
+        idNave = self.utilView.receberValor(valorPrint ="id da nave", chave="informe o id da nave que será removida (Digite 0 para cancelar)", tipo=int, obrigatorio=True, validos=lambda x: x == 0 or self.navesControlador.readNave(x) != None )
         if idNave != 0:
             self.imprimirNaves(idNave, False)
             u.printInstrucao(f'Tem cereza que quer excluir essa nave?')
